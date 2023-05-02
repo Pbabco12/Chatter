@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<style>
+	body {
+		margin: 0;
+		font-family: Roobert;
+		background: #2D3033;
+		color: white;
+		
+		align-items:center;
+		justify-content:center;
+		
+		border-radius: 25px;
+	}
+	.topnav{
+		overflow: hidden;
+		background-color: #6441A5;
+	}
+	.topnav a {
+	float:left;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 16px;
+	}
+	.topnav a:hover{
+		background-color: #B1B1B1;
+		color:white;
+	}
+	.topnav a.active{
+		background-color: #0a0708;
+		color:#white
+	}
+	</style>
+<body> 
+	<div class= "topnav">
+		<a href="home">Home</a>
+		<a href="upload">Upload</a>
+		<a class = "active" href="options">Options</a>
+	</div>
+<h3>Button test</h3>
+<form method="post">
+	<p><input type = "submit" value="Sentiment" name = "Sentiment"/></p>
+	<p><input type = "submit" value="Word Count" name = "Word Count"/></p>
+</form>
+</body>
+</html>

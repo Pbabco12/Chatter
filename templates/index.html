@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<style>
+		body {
+		margin: 0;
+		font-family: Roobert;
+		background: #2D3033;
+		color: white;
+		
+		align-items:center;
+		justify-content:center;
+		
+		border-radius: 25px;
+	}
+	.topnav{
+		overflow: hidden;
+		background-color: #6441A5;
+	}
+	.topnav a {
+	float:left;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 16px;
+	}
+	.topnav a:hover{
+		background-color: #B1B1B1;
+		color:white;
+	}
+	.topnav a.active{
+		background-color: #0a0708;
+		color:#white
+	}
+	</style>
+<head>
+	<meta charset="UTF-8">
+	<meta http-enquiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+</head>
+<body>
+	<div class= "topnav">
+		<a href="home">Home</a>
+		<a class = "active" href="upload">Upload</a>
+	</div>
+	<h1 align= 'center'>Upload</h1>
+	
+	<form method='POST'enctype='multipart/form-data'>
+		{{form.hidden_tag()}}
+		{{form.file()}}
+		{{form.submit()}}
+	</form>
+</body>
+</html>
