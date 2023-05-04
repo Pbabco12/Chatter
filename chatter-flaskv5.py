@@ -324,6 +324,10 @@ def wordcloud():
 	df2['Value'] = 'pos'
 	wc = ''.join
 	
+	p_text = ' '.join(positive_cmt)
+	n_text= ' '.join(negative_cmt)
+	main_text = p_text + ' ' + n_text
+	
 	df_comb = pd.concat([df1, df2], ignore_index=True)
 	df_comb = df_comb.drop_duplicates(subset='Word')
 	
@@ -339,13 +343,11 @@ def wordcloud():
 			else:
 				return colors.to_hex('blue')
 
-	text = ''
-	stopwords = set(STOPWORDS)
+	text = main_text
 	for word in df_comb['Word']:
 		text = text + word + ' '
-
 	wordcloud = WordCloud(width = 800, height = 800,
-	background_color = '#2D3033', color_func = word_color).generate(text)
+	background_color = '#2D3033', colormap= 'coolwarm').generate(text)
 	
 	
 	# plot the WordCloud image                            
@@ -356,11 +358,33 @@ def wordcloud():
 
 	plt.savefig("static/images/wordcloud.png")
 	path = os.path.abspath("images/wordcloud.png")
-	print(path)
-	return render_template('wordcloud.html', image = path)
+	
+	wordcloud = WordCloud(width = 800, height = 800,
+	background_color = '#2D3033', colormap= 'autumn').generate(p_text)
+	
+	
+	# plot the WordCloud image                            
+	plt.figure(figsize = (8, 8), facecolor = None)
+	plt.imshow(wordcloud)
+	plt.axis("off")
+	plt.tight_layout(pad = 0)
 
+	plt.savefig("static/images/wordcloudpos.png")
+	
+	wordcloud = WordCloud(width = 800, height = 800,
+	background_color = '#2D3033', colormap= 'winter').generate(n_text)
 	
 	
+	# plot the WordCloud image                            
+	plt.figure(figsize = (8, 8), facecolor = None)
+	plt.imshow(wordcloud)
+	plt.axis("off")
+	plt.tight_layout(pad = 0)
+
+	plt.savefig("static/images/wordcloudneg.png")
+	
+	return render_template('wordcloud.html')
+
 				
 @app.route('/wordcount', methods=['GET','POST'])
 def phrase_searcher():
