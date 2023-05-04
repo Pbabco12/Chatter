@@ -1,1 +1,62 @@
-test
+<!DOCTYPE html>
+<html>
+	
+<style>
+	body {
+		margin: 0px;
+		font-family: Roobert;
+		background: #2D3033;
+		color: white;
+		
+		text-align: center;
+		
+		border-radius: 25px;
+	}
+	.topnav{
+		overflow: hidden;
+		background-color: #6441A5;
+	}
+	.topnav a {
+	float:left;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 16px;
+	}
+	.topnav a:hover{
+		background-color: #B1B1B1;
+		color:white;
+	}
+	.topnav a.active{
+		background-color: #0a0708;
+		color:#white
+		}
+	div.scores{
+	margin: auto;
+	background-color: #6441A5;
+	width: 400px;
+	padding: 10px 10px 10px 10px;
+	border-radius: 25px;
+	border: 2px solid white
+	}
+	
+	</style>
+	
+	
+<body>
+
+<div class= "topnav">
+		<a href="home">Home</a>
+		<a href="upload">Upload</a>
+		<a href= "options">Options</a>
+		<a href="sentiment">Sentiment</a>
+		<a class = "active"href="sentiment">Output</a>
+		<a href= "/pie">Pie</a>
+		<a href= "/wordcloud">Word Cloud</a>
+	</div>
+
+</div>
+	<img src = "{{url_for('static',filename='/images/wordcloud.png')}}">
+</body>
+</html>

@@ -12,6 +12,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import plotly.graph_objs as go
 from plotly.offline import plot
 import matplotlib.pyplot as plt
+from matplotlib import colors
 from wordcloud import WordCloud, STOPWORDS
 
 
@@ -297,11 +298,10 @@ def wordcloud():
 			score = obj.polarity_scores(word)
 			if score['neu']  != 1:
 				if word not in postive_cmt_words_cnt.keys():
-					postive_cmt_words_cnt[word] = -1
+					postive_cmt_words_cnt[word] = 1
 				else:
-					postive_cmt_words_cnt[word] -= 1
+					postive_cmt_words_cnt[word] += 1
 	for cmt in negative_cmt:
-		print(cmt)
 		words = cmt.split()
 		for word in words:
 			score = obj.polarity_scores(word)
@@ -310,11 +310,11 @@ def wordcloud():
 					negative_cmt_words_cnt[word] = 1
 				else:
 					negative_cmt_words_cnt[word] += 1
+	
 			
 	
-	num = 50
+	num = 25
 	neg_res = dict(sorted(negative_cmt_words_cnt.items(), key = lambda x:x[1], reverse=True)[:num])
-	print(neg_res)
 	pos_res = dict(sorted(postive_cmt_words_cnt.items(), key = lambda x:x[1], reverse=True)[:num])
 	
 	
@@ -325,22 +325,41 @@ def wordcloud():
 	wc = ''.join
 	
 	df_comb = pd.concat([df1, df2], ignore_index=True)
-	print(df_comb)
+	df_comb = df_comb.drop_duplicates(subset='Word')
+	
+	def word_color(*args, **kwargs):
+		word = args[0]
+		value = df_comb.loc[df_comb['Word'] == word]['Value'].to_string()
+		
+		value_list = value.split(' ')
+		if len(value_list) == 5:
+			
+			if value_list[4] == 'neg':
+				return colors.to_hex('red')
+			else:
+				return colors.to_hex('blue')
+
 	text = ''
 	stopwords = set(STOPWORDS)
 	for word in df_comb['Word']:
 		text = text + word + ' '
-	wordcloud = WordCloud(width = 800, height = 800,
-	background_color ='white', colormap = 'coolwarm').generate(text)
 
+	wordcloud = WordCloud(width = 800, height = 800,
+	background_color = '#2D3033', color_func = word_color).generate(text)
+	
+	
 	# plot the WordCloud image                            
 	plt.figure(figsize = (8, 8), facecolor = None)
 	plt.imshow(wordcloud)
 	plt.axis("off")
 	plt.tight_layout(pad = 0)
 
-	plt.show()
-	return 'here'
+	plt.savefig("static/images/wordcloud.png")
+	path = os.path.abspath("images/wordcloud.png")
+	print(path)
+	return render_template('wordcloud.html', image = path)
+
+	
 	
 				
 @app.route('/wordcount', methods=['GET','POST'])
