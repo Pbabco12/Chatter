@@ -55,7 +55,7 @@ def main():
 			break
 	with open(working_directory + '/data' + '/file_name.txt', 'r+') as f_n:
 		f_n.truncate(0)
-	path = working_directory + '/data/' + f_name
+	path = working_directory + '/uploads/' + f_name
 
 	with  open(path,encoding =  'utf8') as file:
 		loader = json.load(file)
